@@ -4,10 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <!-- <script src="script.js" defer></script> -->
     <title>Calculator</title>
 </head>
 <body>
+    <div id="container">
+        <div id="display"></div>
+        <div id=""buttons>
+            <button id="add">Add</button>
+            <button id="subtract">Subtract</button>
+            <button id="multiply">Multiply</button>
+            <button id="divide">Divide</button>
+            <button id="total">Total</button>
+            <button id="zero">Zero</button>
+            <button id="one">One</button>
+            <button id="two">Two</button>
+            <button id="three">Three</button>
+            <button id="four">Four</button>
+            <button id="five">Five</button>
+            <button id="six">Six</button>
+            <button id="seven">Seven</button>
+            <button id="eight">Eight</button>
+            <button id="nine">Nine</button>
+        </div>
+    </div>
+    <script>
+        let number1 = 0;
+        let number2 = 0;
+        let operator = "";
+
+        function operate(number1, operator, number2) {
+            if (operator == "+") {
+                return (number1 + number2);
+            }
+            else if (operator == "-") {
+                return (number1 - number2);
+            }
+            else if (operator == "*") {
+                return (number1 * number2);
+            }
+            else if (operator == "/") {
+                return (number1 / number2);
+            };
+        };
+    </script>
+
+    
 
 </body>
 </html>
