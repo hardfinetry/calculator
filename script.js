@@ -5,11 +5,9 @@ let result;
 const numberButtons = document.querySelector("#numberButtons");
 const operatorButtons = document.querySelector("#operatorButtons");
 const calculate = document.querySelector("#calculate");
+const display = document.querySelector("#display");
 
 function operate(number1, operator, number2) {
-    console.log(`inside operate, number1 is ${number1}`);
-    console.log(`inside operate, operator is ${operator}`);
-    console.log(`inside operate, number2 is ${number2}`);
     switch (operator) {
         case "+":
             result = number1 + number2;
@@ -24,24 +22,25 @@ function operate(number1, operator, number2) {
             result = number1 / number2;
             break;
     }
-    console.log(result);
+    display.innerText += "=" + result;
     return result;
 };
 
 function assignNumber (click) {
     if (number1 == undefined) {
         number1 = Number(click.target.innerHTML);
+        display.innerText = number1;
     }
     else if (number2 ==undefined) {
         number2 = Number(click.target.innerHTML);
+        display.innerText += number2;
     }
-    console.log({number1});
-    console.log({number2});
 };
 
 function assignOperator (click) {
     if (operator == undefined) {
         operator = click.target.innerHTML;
+        display.innerText += operator;
     }
     console.log({operator});
 };
