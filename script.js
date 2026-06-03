@@ -36,29 +36,26 @@ function operate(number1, operator, number2) {
     return result;
 };
 
-function assignNumber(click) {
-    if (click.target.matches(".numberButtons")) {
-        if (operator == undefined) {
-            number1 += click.target.innerHTML;
-            display.innerText += click.target.innerHTML;
-        }
-        else {
-            dotButton.disabled = false;
-            number2 += click.target.innerHTML;
-            display.innerText += click.target.innerHTML;
-        }
-    };
+function assignNumber(numberValue) {
+    if (operator == undefined) {
+        number1 += numberValue;
+        display.innerText += numberValue;
+    }
+    else {
+        number2 += numberValue;
+        display.innerText += numberValue;
+    }
 };
 
-function assignDot(click) {
-    if (click.target.matches("#dot") && !number1.includes(".")) {
-        number1 += click.target.innerHTML;
-        display.innerText += click.target.innerHTML;
+function assignDot(dot) {
+    if (!number1.includes(".")) {
+        number1 += ".";
+        display.innerText += ".";
         dotButton.disabled = true;
     }
     else {
-        number2 += click.target.innerHTML;
-        display.innerText += click.target.innerHTML;
+        number2 += ".";
+        display.innerText += ".";
         dotButton.disabled = true;
     };
 };
@@ -68,6 +65,7 @@ function assignOperator(click) {
         if (operator == undefined) {
             operator = click.target.innerHTML;
             display.innerText += operator;
+            dotButton.disabled = false;
         }
         else if (!number1 == 0 && !number2 == 0) {
             operate(number1, operator, number2);
@@ -79,22 +77,18 @@ function assignOperator(click) {
     }
 };
 
-function useBackspace(click) {
-
-};
-
-backspace.addEventListener("click", () => {
-    display.innerText = display.innerText.slice(0, -1);
-    if (number2 == 0) {
-        number1 = number1.slice(0, -1);
-    }
-    else {
-        number2 = number2.slice(0, -1);
+numberButtons.addEventListener("click", (click) => {
+    if (click.target.matches(".numberButtons")) {
+        assignNumber(click.target.innerHTML);
+    };
+});
+dotButton.addEventListener("click", (click) => {
+    if (click.target.matches("#dot")) {
+        assignDot(click.target.innerHTML);
     }
 });
-numberButtons.addEventListener("click", assignNumber);
+
 operatorButtons.addEventListener("click", assignOperator);
-dotButton.addEventListener("click", assignDot);
 clear.addEventListener("click", () => {
     display.innerText = "";
     number1 = 0;
@@ -110,5 +104,16 @@ calculate.addEventListener("click", () => {
         number1 = 0;
         number2 = 0;
         operator = undefined;
+    }
+});
+
+backspace.addEventListener("click", () => {
+// found a bug here after multi calcs, handle later
+    display.innerText = display.innerText.slice(0, -1);
+    if (number2 == 0) {
+        number1 = number1.slice(0, -1);
+    }
+    else {
+        number2 = number2.slice(0, -1);
     }
 });
