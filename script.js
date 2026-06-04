@@ -1,7 +1,9 @@
-let number1 = 0;
-let number2 = 0;
+let number1 = "";
+let number2 = "";
 let operator;
 let result;
+const numberList = "0123456789";
+const operatorList = "+-*/";
 const numberButtons = document.querySelector("#numberButtonsContainer");
 const operatorButtons = document.querySelector("#operatorButtons");
 const dotButton = document.querySelector("#dot");
@@ -51,12 +53,14 @@ function assignNumber(numberValue) {
 };
 
 function assignDot(dot) {
-    if (!number1.includes(".")) {
-        number1 += ".";
-        display.innerText += ".";
-        dotButton.disabled = true;
+    if (operator == undefined) {
+        if (!number1.includes(".")) {
+            number1 += ".";
+            display.innerText += ".";
+            dotButton.disabled = true;
+        };
     }
-    else {
+    else if (!number2.includes(".")) {
         number2 += ".";
         display.innerText += ".";
         dotButton.disabled = true;
@@ -71,11 +75,19 @@ function assignOperator(operatorValue) {
     }
     else if (!number1 == 0 && !number2 == 0) {
         operate(number1, operator, number2);
-        number1 = result;
+        number1 = result.toString();
         number2 = 0;
         operator = operatorValue;
         display.innerText += operatorValue;
+        dotButton.disabled = false;
     };
+};
+
+function resetVars() {
+    number1 = 0;
+    number2 = 0;
+    operator = undefined;
+    dotButton.disabled = false;
 };
 
 numberButtons.addEventListener("click", (click) => {
@@ -84,10 +96,27 @@ numberButtons.addEventListener("click", (click) => {
     };
 });
 
+document.addEventListener("keydown", (event) => {
+    if (numberList.includes(event.key)) {
+        assignNumber(event.key);
+};
+});
+
 dotButton.addEventListener("click", (click) => {
     if (click.target.matches("#dot")) {
         assignDot(click.target.innerHTML);
     };
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key == ".") {
+        if (!number1.includes(".")) {
+            assignDot(event.key);
+        }
+        else if (!number2.includes(".")) {
+            assignDot(event.key);    
+        }
+    }
 });
 
 operatorButtons.addEventListener("click", (click) => {
@@ -96,19 +125,28 @@ operatorButtons.addEventListener("click", (click) => {
     };
 });
 
+document.addEventListener("keydown", (event) => {
+    if (operatorList.includes(event.key)) {
+        assignOperator(event.key);
+    };
+});
+
 calculate.addEventListener("click", () => {
         operate(number1, operator, number2);
-        number1 = 0;
-        number2 = 0;
-        operator = undefined;
+        resetVars();
     }
 );
 
+document.addEventListener("keydown", (event) => {
+    if (event.key == "=" || event.key == "Enter") {
+        operate(number1, operator, number2);
+        resetVars();
+    };
+});
+
 clear.addEventListener("click", () => {
     display.innerText = "";
-    number1 = 0;
-    number2 = 0;
-    operator = undefined;
+    resetVars();
 });
 
 backspace.addEventListener("click", () => {
